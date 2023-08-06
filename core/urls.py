@@ -17,14 +17,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from MangoRead.views import MangaCardsAPIViewSet
+from MangoRead.views import MangaCardsAPIViewSet, AddReviewView
+from users.views import UserRegistrationViewSet, UserAuthenticationViewSet, UserLogoutAPIViewSet
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/mangacards', MangaCardsAPIViewSet.as_view({
+    path('api/v1/mangacards/', MangaCardsAPIViewSet.as_view({
         'get': 'list', 'post': 'create'
     })),
-    path('api/v1/mangacards/<int:id>', MangaCardsAPIViewSet.as_view({
+    path('api/v1/mangacards/<int:id>/', MangaCardsAPIViewSet.as_view({
         'get': 'retrieve', 'post': 'update', 'delete': 'destroy'
     })),
+    path('api/v1/registration/', UserRegistrationViewSet.as_view({'get': 'list', 'post': 'post'})),
+    path('api/v1/authentication/', UserAuthenticationViewSet.as_view({'get': 'list', 'post': 'post'})),
+    path('api/v1/add-review/', AddReviewView.as_view()),
+    path('api/v1/logout/', UserLogoutAPIViewSet.as_view({'get': 'list'}))
 ]
